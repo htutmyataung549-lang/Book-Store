@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"  // "prisma-client" မဟုတ်ပါ၊ "-js" ပါရပါမယ်
+  // output line ကို ဖျက်လိုက်ပါ - Default အတိုင်း node_modules ထဲမှာ ရှိတာက အကောင်းဆုံးပါ
+}
+
+datasource db {
+  provider = "postgresql"
+   output   = "../app/generated/prisma"
+}
+
+model Book {
+  id           String   @id @default(cuid())
+  gutendexId   Int?     @unique 
+  title        String
+  author       String   @default("Unknown Author") // Author name 
+  description  String?  @db.Text
+  category     String?  // Subjects
+  pdfUrl       String
+  coverImage   String?
+  downloadCount Int     @default(0) 
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
