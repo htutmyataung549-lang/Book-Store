@@ -11,13 +11,20 @@ import {
 interface PaginationProps {
   totalCount: number;
   currentPage: number;
+  search?: string;
 }
 
-export function PaginationDemo({ totalCount, currentPage }: PaginationProps) {
+export function PaginationDemo({
+  totalCount,
+  currentPage,
+  search,
+}: PaginationProps) {
   const totalPages = Math.ceil(totalCount / 32);
 
+  const searchQuery = search ? `&search=${encodeURIComponent(search)}` : "";
+
   const getPageNumbers = () => {
-    const pages : (number | string)[] = [];
+    const pages: (number | string)[] = [];
     const showMax = 5; // လက်ရှိ page ရဲ့ ဘေးတစ်ဖက်စီမှာ ပြမယ့် အရေအတွက်
 
     for (let i = 1; i <= totalPages; i++) {
@@ -49,8 +56,13 @@ export function PaginationDemo({ totalCount, currentPage }: PaginationProps) {
           {/* Previous Button */}
           <PaginationItem>
             <PaginationPrevious
-              href={`?page=${Math.max(1, currentPage - 1)}#grid-book`}
-              className={currentPage <= 1 ? "pointer-events-none opacity-50" : ""}
+              // href={`?page=${Math.max(1, currentPage - 1)}#grid-book`}
+              href={`?page=${currentPage + 1}${
+                searchQuery ? `&search=${searchQuery}` : ""
+              }#grid-book`}
+              className={
+                currentPage <= 1 ? "pointer-events-none opacity-50" : ""
+              }
             />
           </PaginationItem>
 
@@ -61,9 +73,15 @@ export function PaginationDemo({ totalCount, currentPage }: PaginationProps) {
                 <PaginationEllipsis />
               ) : (
                 <PaginationLink
-                  href={`?page=${page}#grid-book` }
+                  href={`?page=${page}${
+                    search ? `&search=${encodeURIComponent(search)}` : ""
+                  }#grid-book`}
                   isActive={currentPage === page}
-                  className={currentPage === page ? "bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-600" : "dark:text-slate-300 dark:hover:bg-slate-800 cursor-pointer" }
+                  className={
+                    currentPage === page
+                      ? "bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-600"
+                      : "dark:text-slate-300 dark:hover:bg-slate-800 cursor-pointer"
+                  }
                 >
                   {page}
                 </PaginationLink>
@@ -74,16 +92,22 @@ export function PaginationDemo({ totalCount, currentPage }: PaginationProps) {
           {/* Next Button */}
           <PaginationItem>
             <PaginationNext
-              href={`?page=${Math.min(totalPages, currentPage + 1)}#grid-book`}
-              className={currentPage >= totalPages ? "pointer-events-none opacity-50" : ""}
+              // href={`?page=${Math.min(totalPages, currentPage + 1)}#grid-book`}
+              href={`?page=${Math.min(totalPages, currentPage + 1)}${search ? `&search=${encodeURIComponent(search)}` : ""}#grid-book`}
+              className={
+                currentPage >= totalPages
+                  ? "pointer-events-none opacity-50"
+                  : ""
+              }
             />
           </PaginationItem>
         </PaginationContent>
       </Pagination>
-      
+
       {/* User အတွက် အချက်အလက်ပြပေးခြင်း */}
       <p className="text-sm text-muted-foreground">
-        Total {totalCount.toLocaleString()} books found (Page {currentPage} of {totalPages})
+        Total {totalCount.toLocaleString()} books found (Page {currentPage} of{" "}
+        {totalPages})
       </p>
     </div>
   );

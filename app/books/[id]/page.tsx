@@ -45,7 +45,7 @@ export default async function BookDetailsPage({ params }: PageProps) {
               }
               alt={book.title}
               fill
-              className="object-cover"
+              className="object-contain"
               priority
             />
           </div>
@@ -57,7 +57,6 @@ export default async function BookDetailsPage({ params }: PageProps) {
             </h1>
 
             <p className="text-xl text-[#435d7d] font-medium mb-6">
-              {/* Error ပြင်ဆင်ချက်: a ရဲ့ type က book ရဲ့ author object ဖြစ်ရပါမယ် */}
               {/* By: {book.authors.map((a) => a.name).join(", ") || "Unknown Author"} */}
               By: {book.authors[0].name} {""} , Date of Birth:{" "}
               {book.authors[0]?.birth_year}
@@ -87,13 +86,13 @@ export default async function BookDetailsPage({ params }: PageProps) {
               <a
                 href={book.formats["text/html"] || "#"}
                 target="_blank"
-                className="bg-[#435d7d] text-white px-8 py-3 rounded-lg hover:bg-[#34495e] transition-all font-semibold shadow-lg shadow-blue-900/20"
+                className="bg-[#435d7d] text-white mt-4 px-8 py-3 rounded-lg hover:bg-[#34495e] transition-all font-semibold shadow-lg shadow-blue-900/20"
               >
                 Read Online
               </a>
-              <button className="border-2 border-gray-200 text-gray-600 px-8 py-3 rounded-lg hover:bg-gray-50 transition-all font-semibold">
+              {/* <button className="border-2 border-gray-200 text-gray-600 px-8 py-3 rounded-lg hover:bg-gray-50 transition-all font-semibold">
                 Download
-              </button>
+              </button> */}
             </div>
 
             <div className="mt-8 pt-6 border-t border-gray-100 text-sm text-gray-400">

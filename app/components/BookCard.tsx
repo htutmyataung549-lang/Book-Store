@@ -47,7 +47,9 @@ export function BookCard({ book }: BookCardProps) {
           src={coverImg}
           alt={book.title}
           fill
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 15vw"
+          // sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 15vw"
+           sizes="(max-width: 340px) 50vw, (max-width: 720px) 25vw, 15vw"
+
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
         {/* Overlay on Hover */}
@@ -81,7 +83,7 @@ export function BookCard({ book }: BookCardProps) {
         <Link
           href={`/books/${book.id}`}
           className={cn(
-            buttonVariants({ variant: "outline" }),
+            buttonVariants({ variant: "outline" }), // Border လေးနဲ့ ပိုကြည့်ကောင်းတဲ့ ပုံစံယူမယ်
             "w-full flex items-center justify-center gap-2 py-5 transition-all duration-300",
             "text-[#435d7d] border-[#435d7d] hover:bg-[#435d7d] hover:text-white" // Custom colors
           )}
