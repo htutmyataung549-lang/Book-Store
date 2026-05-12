@@ -38,6 +38,7 @@ const getBooks = async (page: string = "1"): Promise<GutendexResponse> => {
     }
 
     const data = await response.json();
+
     return data;
   } catch (error) {
     console.error("Error fetching books:", error);
@@ -55,6 +56,9 @@ export default async function Page({ searchParams }: PageProps) {
 
   // API မှ data ယူပါ
   const booksData = await getBooks(currentPage.toString());
+
+  // console.log(booksData);
+  
 
   const books = booksData?.results || [];
   const totalCount = booksData?.count || 0;
@@ -89,7 +93,7 @@ export default async function Page({ searchParams }: PageProps) {
       </section>
 
       {/* --- BOOK GRID SECTION --- */}
-      <section className="py-16 px-4">
+      <section id="grid-book" className="py-16 px-4">
         <div className="container mx-auto">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-3xl font-bold">Featured Books</h2>
@@ -97,7 +101,7 @@ export default async function Page({ searchParams }: PageProps) {
           </div>
           
           {books.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 md:gap-6">
               {books.map((book: GutendexBook) => (
                 <BookCard key={book.id} book={book} />
               ))}
@@ -116,6 +120,7 @@ export default async function Page({ searchParams }: PageProps) {
           <PaginationDemo totalCount={totalCount} currentPage={currentPage} />
         </div>
       </section>
+
 
       {/* --- FOOTER SECTION --- */}
       <footer className="border-t bg-white py-8 mt-auto">

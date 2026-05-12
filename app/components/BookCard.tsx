@@ -10,6 +10,9 @@ import { Button } from "@/components/ui/button";
 import { Download, User, BookOpen } from "lucide-react";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button"; // Shadcn Button styles
+import { cn } from "@/lib/utils";
 
 interface GutendexBook {
   id: number;
@@ -34,7 +37,7 @@ export function BookCard({ book }: BookCardProps) {
     book.formats?.["text/html"] ||
     book.formats?.["application/epub+zip"] ||
     "#";
-  const category = book.subjects?.[0]?.split(',')[0] || "General";
+  const category = book.subjects?.[0]?.split(",")[0] || "General";
 
   return (
     <Card className="group relative flex flex-col h-full max-w-[240px]: overflow-hidden border-none shadow-md hover:shadow-xl transition-all duration-300 bg-white">
@@ -44,12 +47,12 @@ export function BookCard({ book }: BookCardProps) {
           src={coverImg}
           alt={book.title}
           fill
-         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 15vw"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 15vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
         {/* Overlay on Hover */}
         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-             {/* <BookOpen className="text-white w-10 h-10 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300" /> */}
+          {/* <BookOpen className="text-white w-10 h-10 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300" /> */}
         </div>
         {/* Badge */}
         <Badge className="absolute top-2 right-2 bg-[#435d7d] hover:bg-[#435d7d] text-white border-none shadow-sm">
@@ -68,17 +71,24 @@ export function BookCard({ book }: BookCardProps) {
       </CardHeader>
 
       <CardContent className="p-4 pt-2 grow">
-        <CardDescription className="text-xs line-clamp-2 leading-relaxed">
-          {book.summaries?.[0] || "Explore this classic literary work from the Project Gutenberg collection."}
+        <CardDescription className=" line-clamp-2">
+          {book.summaries?.[0] ||
+            "Explore this classic literary work from the Project Gutenberg collection."}
         </CardDescription>
       </CardContent>
 
       <CardFooter className="p-4 pt-0">
-        <Button asChild className="w-full gap-2 bg-[#435d7d] hover:bg-[#34495e] transition-colors">
-          <a href={downloadLink} target="_blank" rel="noopener noreferrer">
-            <BookOpen className="w-4 h-4" /> View Details
-          </a>
-        </Button>
+        <Link
+          href={`/books/${book.id}`}
+          className={cn(
+            buttonVariants({ variant: "outline" }),
+            "w-full flex items-center justify-center gap-2 py-5 transition-all duration-300",
+            "text-[#435d7d] border-[#435d7d] hover:bg-[#435d7d] hover:text-white" // Custom colors
+          )}
+        >
+          <BookOpen className="w-4 h-4" />
+          <span className="font-semibold text-sm">View Details</span>
+        </Link>
       </CardFooter>
     </Card>
   );
